@@ -1,7 +1,9 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import ContactsBox from '../../components/SettingsScreen/ContactsBox';
 import NotificationsBox from '../../components/SettingsScreen/NotificationsBox';
 import SettingsBox from '../../components/SettingsScreen/SettingsBox';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { colors } from '../../constants/colors';
 
 function SettingsScreen() {
   return (
@@ -10,6 +12,20 @@ function SettingsScreen() {
         <ContactsBox />
         <NotificationsBox />
         <SettingsBox />
+
+        <Pressable
+          style={({ pressed }) => [
+            styles.signoutContainer,
+            pressed && styles.pressed,
+          ]}
+        >
+          <Text style={styles.signoutText}>Sign Out</Text>
+          <MaterialCommunityIcons
+            name='location-exit'
+            size={24}
+            color={colors.red}
+          />
+        </Pressable>
       </View>
     </ScrollView>
   );
@@ -26,5 +42,31 @@ const styles = StyleSheet.create({
     gap: 25,
     paddingHorizontal: 25,
     paddingVertical: 40,
+  },
+
+  signoutContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 35,
+    paddingVertical: 20,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+
+    elevation: 4,
+    shadowColor: colors.black100,
+    shadowOpacity: 0.25,
+    shadowOffset: { height: 1, width: 1 },
+    shadowRadius: 7,
+  },
+
+  signoutText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.red,
+  },
+
+  pressed: {
+    opacity: 0.7,
   },
 });

@@ -2,6 +2,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import KeyboardDismiss from '../../components/KeyboardDismiss';
 import { useEffect } from 'react';
 import { colors } from '../../constants/colors';
+import ProfileCard from '../../components/ProfileScreen/ProfileCard';
 
 function ProfileScreen({ navigation }) {
   useEffect(() => {
@@ -12,10 +13,8 @@ function ProfileScreen({ navigation }) {
 
   return (
     <KeyboardDismiss>
-      <ScrollView>
-        <View>
-          <Text>profile</Text>
-        </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ProfileCard />
       </ScrollView>
     </KeyboardDismiss>
   );
@@ -23,7 +22,9 @@ function ProfileScreen({ navigation }) {
 
 function SaveButton() {
   return (
-    <Pressable style={styles.saveButton}>
+    <Pressable
+      style={({ pressed }) => [styles.saveButton, pressed && styles.pressed]}
+    >
       <Text style={styles.saveText}>Save</Text>
     </Pressable>
   );
@@ -40,5 +41,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 17,
     color: colors.blue400,
+  },
+
+  pressed: {
+    opacity: 0.5,
   },
 });
