@@ -4,18 +4,24 @@ import HomeScreen from './src/screens/MainScreens/HomeScreen';
 import NewsScreen from './src/screens/MainScreens/NewsScreen';
 import ServicesScreen from './src/screens/MainScreens/ServicesScreen';
 import SettingsScreen from './src/screens/MainScreens/SettingsScreen';
+import MainHeaderIcons from './src/components/MainHeaderIcons';
+import VotingScreen from './src/screens/SecondaryScreens/VotingScreen';
 
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colors } from './src/constants/colors';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native';
-import MainHeaderIcons from './src/components/MainHeaderIcons';
-import DocumentsScreen from './src/screens/SecondaryScreens/DocumentsScreen';
-import VotingScreen from './src/screens/SecondaryScreens/VotingScreen';
+import TutorialsScreen from './src/screens/TertiaryScreens/TutorialsScreen';
+import VoipScreen from './src/screens/TertiaryScreens/VoipScreen';
+import GeneralScreen from './src/screens/TertiaryScreens/GeneralScreen';
+import ExecutivesScreen from './src/screens/SecondaryScreens/ExecutivesScreen';
+import ProfileScreen from './src/screens/SecondaryScreens/ProfileScreen';
 
+const TopTabs = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
@@ -155,7 +161,9 @@ function SecondaryScreensPattern({ name, component, children }) {
 function HomeSecondaryScreens() {
   return (
     <SecondaryScreensPattern name='Home' component={HomeScreen}>
-      <Stack.Screen name='Documents' component={DocumentsScreen} />
+      <Stack.Screen name='Documents' component={TopTabsScreens} />
+      <Stack.Screen name='Executives' component={ExecutivesScreen} />
+      <Stack.Screen name='Profile' component={ProfileScreen} />
     </SecondaryScreensPattern>
   );
 }
@@ -165,5 +173,19 @@ function ServicesSecondaryScreens() {
     <SecondaryScreensPattern name='Services' component={ServicesScreen}>
       <Stack.Screen name='Voting' component={VotingScreen} />
     </SecondaryScreensPattern>
+  );
+}
+
+function TopTabsScreens() {
+  return (
+    <TopTabs.Navigator
+      screenOptions={{
+        tabBarStyle: { backgroundColor: 'transparent' },
+      }}
+    >
+      <TopTabs.Screen name='Tutorials' component={TutorialsScreen} />
+      <TopTabs.Screen name='VOIP' component={VoipScreen} />
+      <TopTabs.Screen name='General' component={GeneralScreen} />
+    </TopTabs.Navigator>
   );
 }

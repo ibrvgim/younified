@@ -1,16 +1,20 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ServiceItem from '../../components/ServicesScreen/ServiceItem';
+import {
+  phoneIcon,
+  votingIcon,
+} from '../../constants/svgs/servicesScreenIcons';
 
 function ServicesScreen({ navigation }) {
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
         <ServiceItem title='Voting' description='Active elections and vote'>
-          <Image source={require('../../../assets/images/vote.png')} />
+          <View>{votingIcon}</View>
         </ServiceItem>
 
         <ServiceItem title='Call Us' description='Get in touch with us'>
-          <Image source={require('../../../assets/images/phone.png')} />
+          <View>{phoneIcon}</View>
         </ServiceItem>
       </View>
     </View>

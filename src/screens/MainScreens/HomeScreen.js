@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import HomeItem from '../../components/HomeScreen/HomeItem';
 import {
   documentIcon,
@@ -7,11 +7,10 @@ import {
   perksIcon,
   profileIcon,
 } from '../../constants/svgs/homeScreenIcons';
-import * as Svg from 'react-native-svg';
 
 function HomeScreen({ navigation }) {
   function handleNavigation(path) {
-    // navigation.navigate(path);
+    navigation.navigate(path);
   }
 
   return (
@@ -20,7 +19,7 @@ function HomeScreen({ navigation }) {
         <HomeItem
           title='Documents'
           description='All your documents here'
-          handlePress={() => handleNavigation('')}
+          handlePress={() => handleNavigation('Documents')}
         >
           <View>{documentIcon}</View>
         </HomeItem>
@@ -28,7 +27,7 @@ function HomeScreen({ navigation }) {
         <HomeItem
           title='Executives'
           description='Find executives here'
-          handlePress={() => handleNavigation('')}
+          handlePress={() => handleNavigation('Executives')}
         >
           <View>{executivesIcon}</View>
         </HomeItem>
@@ -36,7 +35,7 @@ function HomeScreen({ navigation }) {
         <HomeItem
           title='Profile'
           description='Manage your profile here'
-          handlePress={() => handleNavigation('')}
+          handlePress={() => handleNavigation('Profile')}
         >
           <View>{profileIcon}</View>
         </HomeItem>

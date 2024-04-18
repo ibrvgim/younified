@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import ContactsBox from '../../components/SettingsScreen/ContactsBox';
 import NotificationsBox from '../../components/SettingsScreen/NotificationsBox';
+import SettingsBox from '../../components/SettingsScreen/SettingsBox';
 
 function SettingsScreen() {
   return (
@@ -8,6 +9,7 @@ function SettingsScreen() {
       <View style={styles.container}>
         <ContactsBox />
         <NotificationsBox />
+        <SettingsBox />
       </View>
     </ScrollView>
   );
