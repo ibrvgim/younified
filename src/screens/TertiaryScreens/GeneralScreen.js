@@ -1,11 +1,17 @@
-import { Text, View } from 'react-native';
+import DocumentsCard from '../../components/HomeScreen/DocumentsCard';
+import DocumentsWindow from '../../components/HomeScreen/DocumentsWindow';
 
-function GeneralScreen() {
+function TutorialsScreen() {
   return (
-    <View>
-      <Text>General documents</Text>
-    </View>
+    <DocumentsWindow>
+      <DocumentsCard fileName='tutorials.ppt' />
+      <DocumentsCard fileName='projects.xlsx' />
+      <DocumentsCard fileName='deadlines.pdf' />
+      <DocumentsCard fileName='incomes.xlsx' />
+      <DocumentsCard fileName='lists.doc' />
+      <DocumentsCard fileName='employers.xlsx' />
+    </DocumentsWindow>
   );
 }
 
-export default GeneralScreen;
+export default TutorialsScreen;

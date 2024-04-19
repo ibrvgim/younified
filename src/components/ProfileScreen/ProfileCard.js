@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Input from '../../components/Input';
 import { colors } from '../../constants/colors';
+import OutlineButton from '../../components/OutlineButton';
 
 function ProfileCard() {
   return (
@@ -23,6 +24,8 @@ function ProfileCard() {
         <Input placeholder='City' />
         <Input placeholder='Postal Code' />
       </View>
+
+      <OutlineButton>Reset</OutlineButton>
     </View>
   );
 }
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
     gap: 15,
     borderTopWidth: 2,
     borderTopColor: colors.white300,
-    paddingTop: 20,
+    paddingVertical: 20,
   },
 
   heading: {
