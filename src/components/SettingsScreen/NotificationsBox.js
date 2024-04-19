@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../constants/colors';
-import { Entypo } from '@expo/vector-icons';
 import { shadow } from '../../constants/shadow';
+import Switcher from '../Switcher';
 
 function NotificationsBox() {
   return (
@@ -11,32 +11,32 @@ function NotificationsBox() {
       <View style={styles.controlBox}>
         <View style={styles.controlItem}>
           <Text style={styles.controlText}>Union Notifications</Text>
-          <Entypo name='switch' size={20} color={colors.blue100} />
+          <Switcher />
         </View>
 
         <View style={styles.controlItem}>
           <Text style={styles.controlText}>Allow call drops</Text>
-          <Entypo name='switch' size={20} color={colors.blue100} />
+          <Switcher />
         </View>
 
         <View style={styles.controlItem}>
           <Text style={styles.controlText}>Allow text messages</Text>
-          <Entypo name='switch' size={20} color={colors.blue100} />
+          <Switcher />
         </View>
 
         <View style={styles.controlItem}>
           <Text style={styles.controlText}>Allow emails</Text>
-          <Entypo name='switch' size={20} color={colors.blue100} />
+          <Switcher />
         </View>
 
         <View style={styles.controlItem}>
           <Text style={styles.controlText}>Allow push notifications</Text>
-          <Entypo name='switch' size={20} color={colors.blue100} />
+          <Switcher />
         </View>
 
         <View style={[styles.controlItem, styles.lastControlItem]}>
           <Text style={styles.controlText}>Allow registration emails</Text>
-          <Entypo name='switch' size={20} color={colors.blue100} />
+          <Switcher />
         </View>
       </View>
     </View>

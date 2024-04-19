@@ -2,14 +2,21 @@ import { StyleSheet, Text, View } from 'react-native';
 import Button from '../../components/Button';
 import { shadow } from '../../constants/shadow';
 import { colors } from '../../constants/colors';
+import { useNavigation } from '@react-navigation/native';
 
 function VotingCard({ title, date }) {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>{title}</Text>
 
       <Text style={styles.date}>Ends in 14 days | {date}</Text>
-      <Button>Vote</Button>
+      <Button
+        handlePress={() => navigation.navigate('VotingQuestions', { title })}
+      >
+        Vote
+      </Button>
     </View>
   );
 }

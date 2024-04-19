@@ -22,6 +22,7 @@ import ExecutivesScreen from './src/screens/SecondaryScreens/ExecutivesScreen';
 import ProfileScreen from './src/screens/SecondaryScreens/ProfileScreen';
 import PerksScreen from './src/screens/SecondaryScreens/PerksScreen';
 import CallUsScreen from './src/screens/SecondaryScreens/CallUsScreen';
+import VotingQuestionsScreen from './src/screens/TertiaryScreens/VotingQuestionsScreen';
 
 const TopTabs = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -182,6 +183,7 @@ function ServicesSecondaryScreens() {
           title: 'Call Us',
         }}
       />
+      <Stack.Screen name='VotingQuestions' component={VotingQuestionsScreen} />
     </SecondaryScreensPattern>
   );
 }
