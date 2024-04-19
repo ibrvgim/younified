@@ -21,6 +21,7 @@ import GeneralScreen from './src/screens/TertiaryScreens/GeneralScreen';
 import ExecutivesScreen from './src/screens/SecondaryScreens/ExecutivesScreen';
 import ProfileScreen from './src/screens/SecondaryScreens/ProfileScreen';
 import PerksScreen from './src/screens/SecondaryScreens/PerksScreen';
+import CallUsScreen from './src/screens/SecondaryScreens/CallUsScreen';
 
 const TopTabs = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -174,6 +175,13 @@ function ServicesSecondaryScreens() {
   return (
     <SecondaryScreensPattern name='Services' component={ServicesScreen}>
       <Stack.Screen name='Voting' component={VotingScreen} />
+      <Stack.Screen
+        name='CallUs'
+        component={CallUsScreen}
+        options={{
+          title: 'Call Us',
+        }}
+      />
     </SecondaryScreensPattern>
   );
 }

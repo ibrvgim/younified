@@ -6,14 +6,26 @@ import {
 } from '../../constants/svgs/servicesScreenIcons';
 
 function ServicesScreen({ navigation }) {
+  function handleNavigation(path) {
+    navigation.navigate(path);
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        <ServiceItem title='Voting' description='Active elections and vote'>
+        <ServiceItem
+          title='Voting'
+          description='Active elections and vote'
+          handlePress={() => handleNavigation('Voting')}
+        >
           <View>{votingIcon}</View>
         </ServiceItem>
 
-        <ServiceItem title='Call Us' description='Get in touch with us'>
+        <ServiceItem
+          title='Call Us'
+          description='Get in touch with us'
+          handlePress={() => handleNavigation('CallUs')}
+        >
           <View>{phoneIcon}</View>
         </ServiceItem>
       </View>
