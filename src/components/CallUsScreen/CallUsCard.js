@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Button from '../../components/Button';
 import { colors } from '../../constants/colors';
+import { shadow } from '../../constants/shadow';
 
 function CallUsCard({ topic, startDate, endDate, number }) {
   return (
@@ -34,11 +35,7 @@ const styles = StyleSheet.create({
     paddingVertical: 25,
     borderRadius: 20,
 
-    elevation: 4,
-    shadowColor: colors.black100,
-    shadowOpacity: 0.25,
-    shadowOffset: { height: 1, width: 1 },
-    shadowRadius: 7,
+    ...shadow,
   },
 
   heading: {

@@ -1,5 +1,6 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../constants/colors';
+import { shadow } from '../../constants/shadow';
 
 function ServiceItem({ title, description, children, handlePress }) {
   return (
@@ -30,11 +31,7 @@ const styles = StyleSheet.create({
     minWidth: '90%',
     minHeight: 130,
 
-    elevation: 4,
-    shadowColor: colors.black100,
-    shadowOpacity: 0.25,
-    shadowOffset: { height: 1, width: 1 },
-    shadowRadius: 7,
+    ...shadow,
   },
 
   heading: {

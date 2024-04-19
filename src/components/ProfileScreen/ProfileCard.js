@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import Input from '../../components/Input';
 import { colors } from '../../constants/colors';
 import OutlineButton from '../../components/OutlineButton';
+import { shadow } from '../../constants/shadow';
 
 function ProfileCard() {
   const email = `alex.hoffmann@gmail.com`;
@@ -55,6 +56,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 30,
     borderRadius: 15,
+
+    ...shadow,
   },
 
   inputsContainer: {

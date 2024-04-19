@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../constants/colors';
 import { Entypo } from '@expo/vector-icons';
+import { shadow } from '../../constants/shadow';
 
 function NotificationsBox() {
   return (
@@ -52,11 +53,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     gap: 18,
 
-    elevation: 4,
-    shadowColor: colors.black100,
-    shadowOpacity: 0.25,
-    shadowOffset: { height: 1, width: 1 },
-    shadowRadius: 7,
+    ...shadow,
   },
 
   heading: {

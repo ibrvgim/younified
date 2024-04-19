@@ -4,6 +4,7 @@ import NotificationsBox from '../../components/SettingsScreen/NotificationsBox';
 import SettingsBox from '../../components/SettingsScreen/SettingsBox';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../../constants/colors';
+import { shadow } from '../../constants/shadow';
 
 function SettingsScreen() {
   return (
@@ -53,11 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 15,
 
-    elevation: 4,
-    shadowColor: colors.black100,
-    shadowOpacity: 0.25,
-    shadowOffset: { height: 1, width: 1 },
-    shadowRadius: 7,
+    ...shadow,
   },
 
   signoutText: {

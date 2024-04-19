@@ -2,6 +2,7 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Octicons } from '@expo/vector-icons';
 import { colors } from '../../constants/colors';
 import { formatFileExtension } from '../../utilities/helpers/formatFileExtension';
+import { shadow } from '../../constants/shadow';
 
 function DocumentsCard({ fileName }) {
   return (
@@ -30,11 +31,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 25,
 
-    elevation: 4,
-    shadowColor: colors.black100,
-    shadowOpacity: 0.25,
-    shadowOffset: { height: 1, width: 1 },
-    shadowRadius: 7,
+    ...shadow,
   },
 
   file: {

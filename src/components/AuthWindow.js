@@ -1,5 +1,6 @@
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../constants/colors';
+import { shadow } from '../constants/shadow';
 
 function AuthWindow({ children, title }) {
   return (
@@ -44,11 +45,7 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
     borderRadius: 10,
 
-    elevation: 4,
-    shadowColor: colors.blue100,
-    shadowOpacity: 0.3,
-    shadowOffset: { height: 10, width: 0 },
-    shadowRadius: 15,
+    ...shadow,
   },
 
   header: {
