@@ -7,13 +7,15 @@ function Input({
   type,
   secure = false,
   showPassword = false,
+  search = false,
   handleShowPassword,
   hidePassword,
+  style,
 }) {
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
+        style={[styles.input, style]}
         placeholder={placeholder}
         keyboardType={type}
         secureTextEntry={secure}
@@ -41,6 +43,20 @@ function Input({
           )}
         </Pressable>
       )}
+
+      {search && (
+        <Pressable
+          style={({ pressed }) => [styles.opacity, pressed && styles.pressed]}
+          onPress={handleShowPassword}
+        >
+          <Ionicons
+            style={styles.iconSearch}
+            name='search'
+            size={24}
+            color={colors.black50}
+          />
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -65,6 +81,10 @@ const styles = StyleSheet.create({
 
   icon: {
     marginLeft: -37,
+  },
+
+  iconSearch: {
+    marginLeft: -43,
   },
 
   opacity: {

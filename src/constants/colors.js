@@ -16,4 +16,5 @@ export const colors = {
   blue400: '#0F3BAA',
 
   red: '#D94D2E',
+  yellow: '#DFE245',
 };

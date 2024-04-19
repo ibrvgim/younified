@@ -20,6 +20,7 @@ import VoipScreen from './src/screens/TertiaryScreens/VoipScreen';
 import GeneralScreen from './src/screens/TertiaryScreens/GeneralScreen';
 import ExecutivesScreen from './src/screens/SecondaryScreens/ExecutivesScreen';
 import ProfileScreen from './src/screens/SecondaryScreens/ProfileScreen';
+import PerksScreen from './src/screens/SecondaryScreens/PerksScreen';
 
 const TopTabs = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -164,6 +165,7 @@ function HomeSecondaryScreens() {
       <Stack.Screen name='Documents' component={TopTabsScreens} />
       <Stack.Screen name='Executives' component={ExecutivesScreen} />
       <Stack.Screen name='Profile' component={ProfileScreen} />
+      <Stack.Screen name='Perks' component={PerksScreen} />
     </SecondaryScreensPattern>
   );
 }

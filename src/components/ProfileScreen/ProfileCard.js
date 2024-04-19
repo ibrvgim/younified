@@ -1,15 +1,30 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import Input from '../../components/Input';
 import { colors } from '../../constants/colors';
 import OutlineButton from '../../components/OutlineButton';
 
 function ProfileCard() {
+  const email = `alex.hoffmann@gmail.com`;
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Personal Information</Text>
       <Text style={styles.description}>
         Edit your personal information at any time
       </Text>
+
+      <View style={styles.imageNameContainer}>
+        <Image
+          style={styles.user}
+          source={require('../../../assets/images/user.png')}
+        />
+        <View>
+          <Text style={styles.userName}>Alex Hoffmann</Text>
+          <Text style={styles.userEmail}>
+            {email.length < 26 ? email : email.slice(0, 24) + '...'}
+          </Text>
+        </View>
+      </View>
 
       <View style={styles.inputsContainer}>
         <Input placeholder='First Name' />
@@ -61,5 +76,31 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 15,
     color: colors.black50,
+  },
+
+  imageNameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+    paddingBottom: 20,
+    paddingTop: 10,
+  },
+
+  user: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+  },
+
+  userName: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 5,
+    color: colors.black200,
+  },
+
+  userEmail: {
+    color: colors.black50,
+    paddingRight: 20,
   },
 });

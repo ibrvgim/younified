@@ -51,7 +51,7 @@ function HomeScreen({ navigation }) {
         <HomeItem
           title='Perks'
           description='Check out the available perks'
-          handlePress={() => handleNavigation('')}
+          handlePress={() => handleNavigation('Perks')}
         >
           <View>{perksIcon}</View>
         </HomeItem>
