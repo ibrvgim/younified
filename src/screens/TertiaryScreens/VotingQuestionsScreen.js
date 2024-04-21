@@ -1,41 +1,138 @@
-import { useEffect } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import ProgressBar from '../../components/ProgressBar';
 import Button from '../../components/Button';
+import OutlineButton from '../../components/OutlineButton';
 import { colors } from '../../constants/colors';
+import { voteQuestions } from '../../data/voteQuestions';
+import { doneIcon } from '../../constants/svgs/servicesScreenIcons';
+import { shadow } from '../../constants/shadow';
 
 function VotingQuestionsScreen({ navigation, route }) {
+  const { title } = route.params;
+
   useEffect(() => {
     navigation.setOptions({
-      title: route.params.title,
+      title: title,
       headerRight: false,
     });
   }, [navigation]);
 
+  const [question, setQuestion] = useState(0);
+  const [finish, setFinish] = useState(false);
+  const [submit, setSubmit] = useState(false);
+
+  const voting = voteQuestions.find(
+    (item) => item.title.toLowerCase() === title.toLowerCase()
+  ).vote;
+
+  const currentQuestion = voting.at(question);
+  const { options, question: mainQuestion } = currentQuestion;
+  const questionsNumber = voting.length;
+  const currentQuestionNumber = question + 1;
+  const questionsLeft = questionsNumber - currentQuestionNumber;
+
+  function handlePrevious() {
+    if (question > 0) setQuestion((question) => (question -= 1));
+    if (submit) setSubmit(false);
+  }
+
+  function handleNext() {
+    if (question < voting.length - 1)
+      setQuestion((question) => (question += 1));
+  }
+
+  function handleFinish() {
+    setFinish(true);
+  }
+
+  function handleSubmit() {
+    setSubmit(true);
+  }
+
+  if (submit) {
+    return (
+      <View style={styles.screen}>
+        <View style={styles.doneContainer}>
+          <View style={styles.background}>
+            <View>{doneIcon}</View>
+            <Text style={styles.doneText}>All Done!</Text>
+
+            <Text style={styles.thanksText}>Thank you for participating!</Text>
+          </View>
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <Button handlePress={() => navigation.navigate('Voting')}>
+            Finish
+          </Button>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
-        <Text style={styles.questionsNumber}>1 / 3 questions</Text>
-        <ProgressBar currentQuestion={1} questionsNumber={3} />
-        <Text style={styles.completeNumber}>2 more to complete</Text>
+        <Text style={styles.questionsNumber}>
+          {currentQuestionNumber} / {questionsNumber} questions
+        </Text>
+        <ProgressBar
+          currentQuestion={currentQuestionNumber}
+          questionsNumber={questionsNumber}
+        />
+        <Text style={styles.completeNumber}>
+          {questionsLeft > 0
+            ? `${questionsLeft} more to complete`
+            : 'You have answered all the questions'}
+        </Text>
       </View>
 
       <View style={styles.container}>
-        <Text style={styles.question}>Favourite color?</Text>
+        <Text style={styles.question}>{mainQuestion}</Text>
         <Text style={styles.description}>
           You must select at least <Text style={styles.strong}>1</Text> option!
         </Text>
 
         <View style={styles.optionsContainer}>
-          <QuestionOptions option='blue' />
-          <QuestionOptions option='red' />
-          <QuestionOptions option='green' />
-          <QuestionOptions option='black' />
+          {options.map((option) => (
+            <QuestionOptions key={option} option={option} />
+          ))}
         </View>
       </View>
 
-      <View style={styles.buttonContainer}>
-        <Button>Next</Button>
+      <View
+        style={[
+          styles.buttonContainer,
+          question > 0 && styles.buttonsContainer,
+        ]}
+      >
+        {question > 0 && (
+          <View style={[question > 0 && styles.button]}>
+            <OutlineButton handlePress={handlePrevious}>
+              {finish ? 'Change Selection' : 'Back'}
+            </OutlineButton>
+          </View>
+        )}
+
+        {finish ? (
+          <View style={[question > 0 && styles.button]}>
+            <Button
+              handlePress={handleSubmit}
+              styleButton={styles.submithButton}
+            >
+              Submit
+            </Button>
+          </View>
+        ) : question + 1 === questionsNumber ? (
+          <View style={[question > 0 && styles.button]}>
+            <Button handlePress={handleFinish}>Finish</Button>
+          </View>
+        ) : (
+          <View style={[question > 0 && styles.button]}>
+            <Button handlePress={handleNext}>Continue</Button>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -94,6 +191,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
+  buttonsContainer: {
+    flexDirection: 'row',
+    gap: 15,
+  },
+
+  button: {
+    flex: 1,
+  },
+
+  submithButton: {
+    backgroundColor: colors.green,
+  },
+
   question: {
     fontSize: 19,
     fontWeight: '500',
@@ -134,5 +244,35 @@ const styles = StyleSheet.create({
 
   pressed: {
     opacity: 0.6,
+  },
+
+  doneContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 25,
+  },
+
+  doneText: {
+    fontSize: 20,
+    fontWeight: '500',
+    color: colors.green,
+  },
+
+  thanksText: {
+    fontSize: 22,
+    color: colors.black50,
+  },
+
+  background: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 20,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    paddingVertical: 40,
+
+    ...shadow,
   },
 });

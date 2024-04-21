@@ -1,4 +1,4 @@
-const voteQuestions = [
+export const voteQuestions = [
   {
     id: '001',
     title: 'Upcoming meeting',
