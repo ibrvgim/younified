@@ -23,6 +23,7 @@ import ProfileScreen from './src/screens/SecondaryScreens/ProfileScreen';
 import PerksScreen from './src/screens/SecondaryScreens/PerksScreen';
 import CallUsScreen from './src/screens/SecondaryScreens/CallUsScreen';
 import VotingQuestionsScreen from './src/screens/TertiaryScreens/VotingQuestionsScreen';
+import NotificationsScreen from './src/screens/MainScreens/NotificationsScreen';
 
 const TopTabs = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -157,6 +158,7 @@ function SecondaryScreensPattern({ name, component, children }) {
         }}
       />
       {children}
+      <Stack.Screen name='Notifications' component={NotificationsScreen} />
     </Stack.Navigator>
   );
 }
@@ -180,7 +182,7 @@ function ServicesSecondaryScreens() {
         name='CallUs'
         component={CallUsScreen}
         options={{
-          title: 'Call Us',
+          title: 'Calls',
         }}
       />
       <Stack.Screen name='VotingQuestions' component={VotingQuestionsScreen} />

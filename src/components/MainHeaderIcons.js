@@ -1,11 +1,17 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../constants/colors';
+import { useNavigation } from '@react-navigation/native';
 
 function MainHeaderIcons() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <Pressable style={({ pressed }) => pressed && styles.pressed}>
+      <Pressable
+        style={({ pressed }) => pressed && styles.pressed}
+        onPress={() => navigation.navigate('Notifications')}
+      >
         <Ionicons
           style={styles.icon}
           name='notifications-outline'

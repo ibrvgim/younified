@@ -22,7 +22,7 @@ function ServicesScreen({ navigation }) {
         </ServiceItem>
 
         <ServiceItem
-          title='Call Us'
+          title='Calls'
           description='Get in touch with us'
           handlePress={() => handleNavigation('CallUs')}
         >
