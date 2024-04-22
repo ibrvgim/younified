@@ -4,6 +4,7 @@ import {
   phoneIcon,
   votingIcon,
 } from '../../constants/svgs/servicesScreenIcons';
+import ModalWindow from '../../components/ModalWindow';
 
 function ServicesScreen({ navigation }) {
   function handleNavigation(path) {
@@ -29,6 +30,7 @@ function ServicesScreen({ navigation }) {
           <View>{phoneIcon}</View>
         </ServiceItem>
       </View>
+      <ModalWindow />
     </View>
   );
 }
