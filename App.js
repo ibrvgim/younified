@@ -14,7 +14,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colors } from './src/constants/colors';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
-import { Image } from 'react-native';
+import { ActivityIndicator, Image, View } from 'react-native';
 import TutorialsScreen from './src/screens/TertiaryScreens/TutorialsScreen';
 import VoipScreen from './src/screens/TertiaryScreens/VoipScreen';
 import GeneralScreen from './src/screens/TertiaryScreens/GeneralScreen';
@@ -24,10 +24,19 @@ import PerksScreen from './src/screens/SecondaryScreens/PerksScreen';
 import CallUsScreen from './src/screens/SecondaryScreens/CallUsScreen';
 import VotingQuestionsScreen from './src/screens/TertiaryScreens/VotingQuestionsScreen';
 import NotificationsScreen from './src/screens/MainScreens/NotificationsScreen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import store from './store';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+import { setAuthentication } from './src/slices/authenticationSlice';
 
 const TopTabs = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
+
+const queryClient = new QueryClient();
 
 const navigationStyle = {
   headerRight: () => <MainHeaderIcons />,
@@ -47,17 +56,42 @@ const headerLogo = {
 
 export default function App() {
   return (
-    <>
-      <StatusBar style='auto' />
-      <Navigation />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <StatusBar style='auto' />
+        <Navigation />
+      </Provider>
+    </QueryClientProvider>
   );
 }
 
 function Navigation() {
+  const { isAuthenticated } = useSelector((state) => state.authentication);
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchStorage() {
+      setIsLoading(true);
+      const isAuthenticated = await AsyncStorage.getItem('authentication');
+
+      if (isAuthenticated) dispatch(setAuthentication(isAuthenticated));
+      setIsLoading(false);
+    }
+
+    fetchStorage();
+  }, []);
+
+  if (isLoading)
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size='large' color={colors.black300} />
+      </View>
+    );
+
   return (
     <NavigationContainer>
-      <AuthenticatedScreens />
+      {isAuthenticated ? <AuthenticatedScreens /> : <AuthenticationScreens />}
     </NavigationContainer>
   );
 }

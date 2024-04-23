@@ -1,13 +1,35 @@
 import Input from '../components/Input';
 import AuthWindow from '../components/AuthWindow';
 import Button from '../components/Button';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { colors } from '../constants/colors';
 import KeyboardDismiss from '../components/KeyboardDismiss';
 import { useState } from 'react';
+import useSignIn from '../hooks/auth/useSignIn';
+
+const initialInputs = {
+  email: '',
+  password: '',
+};
 
 function SignInScreen({ navigation }) {
   const [hidePassword, setHidePassword] = useState(true);
+  const [inputs, setInputs] = useState(initialInputs);
+  const { isLogining, getUserIn } = useSignIn();
+
+  function handleInputsValue(keyName, value) {
+    setInputs((inputs) => ({ ...inputs, [keyName]: value }));
+  }
+
+  function handleSignin() {
+    getUserIn(inputs);
+  }
 
   function handleShowPassword() {
     setHidePassword((hide) => !hide);
@@ -17,13 +39,23 @@ function SignInScreen({ navigation }) {
     <KeyboardDismiss>
       <AuthWindow title='Log into your account'>
         <View style={styles.inputsContainer}>
-          <Input placeholder='Email' type='email-address' />
+          <Input
+            placeholder='Email'
+            type='email-address'
+            handleInputsValue={handleInputsValue}
+            keyName='email'
+            inputs={inputs}
+          />
+
           <Input
             placeholder='Password'
             secure={hidePassword}
             showPassword={true}
             handleShowPassword={handleShowPassword}
             hidePassword={hidePassword}
+            handleInputsValue={handleInputsValue}
+            keyName='password'
+            inputs={inputs}
           />
 
           <View style={styles.forgotContainer}>
@@ -33,7 +65,13 @@ function SignInScreen({ navigation }) {
           </View>
         </View>
 
-        <Button>Sign in</Button>
+        <Button handlePress={handleSignin} disabled={isLogining}>
+          {isLogining ? (
+            <ActivityIndicator size='small' color='#fff' />
+          ) : (
+            'Sign in'
+          )}
+        </Button>
 
         <View style={styles.switchContainer}>
           <Text style={styles.switchText}>If you don't have an account -</Text>

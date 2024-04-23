@@ -1,12 +1,22 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import ContactsBox from '../../components/SettingsScreen/ContactsBox';
 import NotificationsBox from '../../components/SettingsScreen/NotificationsBox';
 import SettingsBox from '../../components/SettingsScreen/SettingsBox';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../../constants/colors';
 import { shadow } from '../../constants/shadow';
+import useSignOut from '../../hooks/auth/useSignOut';
 
 function SettingsScreen() {
+  const { isSigningOut, signOut } = useSignOut();
+
   return (
     <ScrollView style={styles.screen} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -14,19 +24,27 @@ function SettingsScreen() {
         <NotificationsBox />
         <SettingsBox />
 
-        <Pressable
-          style={({ pressed }) => [
-            styles.signoutContainer,
-            pressed && styles.pressed,
-          ]}
-        >
-          <Text style={styles.signoutText}>Sign Out</Text>
-          <MaterialCommunityIcons
-            name='location-exit'
-            size={24}
-            color={colors.red}
-          />
-        </Pressable>
+        {isSigningOut ? (
+          <View style={[styles.signoutContainer, { justifyContent: 'center' }]}>
+            <ActivityIndicator size='small' />
+          </View>
+        ) : (
+          <Pressable
+            style={({ pressed }) => [
+              styles.signoutContainer,
+              pressed && styles.pressed,
+            ]}
+            onPress={signOut}
+            disabled={isSigningOut}
+          >
+            <Text style={styles.signoutText}>Sign Out</Text>
+            <MaterialCommunityIcons
+              name='location-exit'
+              size={24}
+              color={colors.red}
+            />
+          </Pressable>
+        )}
       </View>
     </ScrollView>
   );

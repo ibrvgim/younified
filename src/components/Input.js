@@ -11,6 +11,9 @@ function Input({
   handleShowPassword,
   hidePassword,
   style,
+  handleInputsValue,
+  keyName,
+  inputs,
 }) {
   return (
     <View style={styles.container}>
@@ -19,6 +22,9 @@ function Input({
         placeholder={placeholder}
         keyboardType={type}
         secureTextEntry={secure}
+        onChangeText={(value) => handleInputsValue(keyName, value)}
+        value={inputs?.[keyName]}
+        autoCapitalize='none'
       />
 
       {showPassword && (
