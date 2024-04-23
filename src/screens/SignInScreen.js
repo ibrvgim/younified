@@ -12,6 +12,15 @@ import { colors } from '../constants/colors';
 import KeyboardDismiss from '../components/KeyboardDismiss';
 import { useState } from 'react';
 import useSignIn from '../hooks/auth/useSignIn';
+import {
+  formatEmail,
+  formatInput,
+} from '../utilities/validations/inputsValidation';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setEmailError,
+  setPasswordError,
+} from '../slices/inputsValidationSlice';
 
 const initialInputs = {
   email: '',
@@ -22,13 +31,25 @@ function SignInScreen({ navigation }) {
   const [hidePassword, setHidePassword] = useState(true);
   const [inputs, setInputs] = useState(initialInputs);
   const { isLogining, getUserIn } = useSignIn();
+  const dispatch = useDispatch();
+  const errors = useSelector((state) => state.validation);
 
   function handleInputsValue(keyName, value) {
     setInputs((inputs) => ({ ...inputs, [keyName]: value }));
   }
 
   function handleSignin() {
-    getUserIn(inputs);
+    const isValidEmail = formatEmail(inputs.email);
+    const isValidPassword = formatInput(8, inputs.password);
+
+    if (!isValidPassword)
+      dispatch(setPasswordError('Password must be at least 8 characters'));
+    else dispatch(setPasswordError(''));
+
+    if (!isValidEmail) dispatch(setEmailError('Email must be valid'));
+    else dispatch(setEmailError(''));
+
+    if (isValidEmail && isValidPassword) getUserIn(inputs);
   }
 
   function handleShowPassword() {
@@ -45,6 +66,7 @@ function SignInScreen({ navigation }) {
             handleInputsValue={handleInputsValue}
             keyName='email'
             inputs={inputs}
+            error={errors.email}
           />
 
           <Input
@@ -56,6 +78,7 @@ function SignInScreen({ navigation }) {
             handleInputsValue={handleInputsValue}
             keyName='password'
             inputs={inputs}
+            error={errors.password}
           />
 
           <View style={styles.forgotContainer}>

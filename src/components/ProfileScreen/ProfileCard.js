@@ -3,9 +3,13 @@ import Input from '../../components/Input';
 import { colors } from '../../constants/colors';
 import OutlineButton from '../../components/OutlineButton';
 import { shadow } from '../../constants/shadow';
+import useGetUserData from '../../hooks/auth/useGetUserData';
+import { useEffect } from 'react';
 
 function ProfileCard() {
-  const email = `alex.hoffmann@gmail.com`;
+  const { userData } = useGetUserData();
+
+  const email = `alex@gmail.com`;
 
   return (
     <View style={styles.container}>
@@ -22,7 +26,7 @@ function ProfileCard() {
         <View>
           <Text style={styles.userName}>Alex Hoffmann</Text>
           <Text style={styles.userEmail}>
-            {email.length < 26 ? email : email.slice(0, 24) + '...'}
+            {email?.length < 26 ? email : email?.slice(0, 24) + '...'}
           </Text>
         </View>
       </View>
@@ -30,7 +34,6 @@ function ProfileCard() {
       <View style={styles.inputsContainer}>
         <Input placeholder='First Name' />
         <Input placeholder='Last Name' />
-        <Input placeholder='Username' />
         <Input placeholder='Status' />
         <Input placeholder='Unit' />
         <Input placeholder='Employment Status' />

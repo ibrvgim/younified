@@ -6,6 +6,20 @@ import OutlineButton from '../components/OutlineButton';
 import KeyboardDismiss from '../components/KeyboardDismiss';
 import { useState } from 'react';
 import useSignUp from '../hooks/auth/useSignUp';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  formatEmail,
+  formatInput,
+  formatPhoneNumber,
+} from '../utilities/validations/inputsValidation';
+import {
+  setEmailError,
+  setPasswordError,
+  setConfirmPasswordError,
+  setFirstNameError,
+  setLastNameError,
+  setPhoneNumberError,
+} from '../slices/inputsValidationSlice';
 
 const initialValues = {
   email: '',
@@ -19,15 +33,66 @@ const initialValues = {
 function SignUpScreen({ navigation }) {
   const [inputs, setInputs] = useState(initialValues);
   const { isCreating, createUser } = useSignUp();
+  const dispatch = useDispatch();
+  const errors = useSelector((state) => state.validation);
 
   function handleInputsValue(keyName, value) {
     setInputs((values) => ({ ...values, [keyName]: value }));
   }
 
+  function validateAllInputs() {
+    const isValidEmail = formatEmail(inputs.email);
+    const isValidPassword = formatInput(8, inputs.password);
+    const isValidConfirmPassword = formatInput(8, inputs.confirmPassword);
+    const isSamePasswords = inputs.password === inputs.confirmPassword;
+    const isValidFirstName = formatInput(2, inputs.firstName);
+    const isValidLastName = formatInput(2, inputs.lastName);
+    const isValidPhoneNumber = formatPhoneNumber(inputs.phoneNumber);
+
+    if (!isValidEmail) dispatch(setEmailError('Email must be valid'));
+    else dispatch(setEmailError(''));
+
+    if (!isValidPassword)
+      dispatch(setPasswordError('Password must be at least 8 characters'));
+    else dispatch(setPasswordError(''));
+
+    if (!isSamePasswords)
+      dispatch(setConfirmPasswordError('Passwords must be the same '));
+    else dispatch(setConfirmPasswordError(''));
+
+    if (!isValidFirstName)
+      dispatch(setFirstNameError('Must be at least 2 characters'));
+    else dispatch(setFirstNameError(''));
+
+    if (!isValidLastName)
+      dispatch(setLastNameError('Must be at least 2 characters'));
+    else dispatch(setLastNameError(''));
+
+    if (!isValidPhoneNumber)
+      dispatch(setPhoneNumberError('Incorrect phone number format'));
+    else dispatch(setPhoneNumberError(''));
+
+    if (
+      isValidEmail &&
+      isValidPassword &&
+      isValidConfirmPassword &&
+      isSamePasswords &&
+      isValidFirstName &&
+      isValidLastName &&
+      isValidPhoneNumber
+    )
+      return true;
+    else return false;
+  }
+
   function handleSubmit() {
     const { email, firstName, lastName, phoneNumber, password } = inputs;
-    createUser({ email, password, firstName, lastName, phoneNumber });
-    // setInputs(initialValues);
+    const isAllValid = validateAllInputs();
+
+    if (isAllValid) {
+      createUser({ email, password, firstName, lastName, phoneNumber });
+      setInputs(initialValues);
+    }
   }
 
   return (
@@ -40,6 +105,7 @@ function SignUpScreen({ navigation }) {
             handleInputsValue={handleInputsValue}
             keyName='email'
             inputs={inputs}
+            error={errors.email}
           />
 
           <Input
@@ -47,6 +113,7 @@ function SignUpScreen({ navigation }) {
             handleInputsValue={handleInputsValue}
             keyName='firstName'
             inputs={inputs}
+            error={errors.firstName}
           />
 
           <Input
@@ -54,6 +121,7 @@ function SignUpScreen({ navigation }) {
             handleInputsValue={handleInputsValue}
             keyName='lastName'
             inputs={inputs}
+            error={errors.lastName}
           />
 
           <Input
@@ -62,6 +130,7 @@ function SignUpScreen({ navigation }) {
             handleInputsValue={handleInputsValue}
             keyName='phoneNumber'
             inputs={inputs}
+            error={errors.phoneNumber}
           />
 
           <Input
@@ -70,6 +139,7 @@ function SignUpScreen({ navigation }) {
             handleInputsValue={handleInputsValue}
             keyName='password'
             inputs={inputs}
+            error={errors.password}
           />
 
           <Input
@@ -78,6 +148,7 @@ function SignUpScreen({ navigation }) {
             handleInputsValue={handleInputsValue}
             keyName='confirmPassword'
             inputs={inputs}
+            error={errors.confirmPassword}
           />
         </View>
 
