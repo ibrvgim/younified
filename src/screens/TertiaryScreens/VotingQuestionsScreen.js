@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import ProgressBar from '../../components/ProgressBar';
 import Button from '../../components/Button';
 import OutlineButton from '../../components/OutlineButton';
@@ -7,9 +7,19 @@ import { colors } from '../../constants/colors';
 import { voteQuestions } from '../../data/voteQuestions';
 import { doneIcon } from '../../constants/svgs/servicesScreenIcons';
 import { shadow } from '../../constants/shadow';
+import useGetUserData from '../../hooks/auth/useGetUserData';
+import useSetVotes from '../../hooks/votes/useSetVotes';
 
 function VotingQuestionsScreen({ navigation, route }) {
   const { title } = route.params;
+  const { userData } = useGetUserData();
+  const { setVoteResult } = useSetVotes();
+
+  const [question, setQuestion] = useState(0);
+  const [finish, setFinish] = useState(false);
+  const [submit, setSubmit] = useState(false);
+  const [results, setResults] = useState([]);
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -17,10 +27,6 @@ function VotingQuestionsScreen({ navigation, route }) {
       headerRight: false,
     });
   }, [navigation]);
-
-  const [question, setQuestion] = useState(0);
-  const [finish, setFinish] = useState(false);
-  const [submit, setSubmit] = useState(false);
 
   const voting = voteQuestions.find(
     (item) => item.title.toLowerCase() === title.toLowerCase()
@@ -33,21 +39,55 @@ function VotingQuestionsScreen({ navigation, route }) {
   const questionsLeft = questionsNumber - currentQuestionNumber;
 
   function handlePrevious() {
-    if (question > 0) setQuestion((question) => (question -= 1));
+    setFinish(false);
+
+    if (question > 0) {
+      setQuestion(0);
+      setResults([]);
+    }
+
     if (submit) setSubmit(false);
   }
 
   function handleNext() {
-    if (question < voting.length - 1)
+    if (question < voting.length - 1 && answers.length > 0)
       setQuestion((question) => (question += 1));
   }
 
   function handleFinish() {
-    setFinish(true);
+    if (answers.length > 0) setFinish(true);
+  }
+
+  function handleChoices(newAnswer) {
+    const chosenAnswer = answers.findIndex((answer) => answer === newAnswer);
+
+    if (chosenAnswer >= 0) {
+      const newAnswers = answers.slice();
+      newAnswers.splice(chosenAnswer, 1);
+      setAnswers(newAnswers);
+    }
+
+    if (chosenAnswer < 0 && answers.length < 3)
+      setAnswers((answers) => [...answers, newAnswer]);
+  }
+
+  function handleStoreAnswers() {
+    const result = {
+      question: mainQuestion,
+      answers,
+    };
+
+    setResults((results) => [...results, result]);
+  }
+
+  function handleClearAnswers() {
+    setAnswers([]);
   }
 
   function handleSubmit() {
     setSubmit(true);
+
+    setVoteResult({ id: userData?.id, title, results });
   }
 
   if (submit) {
@@ -63,7 +103,7 @@ function VotingQuestionsScreen({ navigation, route }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button handlePress={() => navigation.navigate('Voting')}>
+          <Button handlePress={() => navigation.navigate('Services')}>
             Finish
           </Button>
         </View>
@@ -96,7 +136,12 @@ function VotingQuestionsScreen({ navigation, route }) {
 
         <View style={styles.optionsContainer}>
           {options.map((option) => (
-            <QuestionOptions key={option} option={option} />
+            <QuestionOptions
+              key={option}
+              option={option}
+              handleChoices={handleChoices}
+              answers={answers}
+            />
           ))}
         </View>
       </View>
@@ -126,11 +171,26 @@ function VotingQuestionsScreen({ navigation, route }) {
           </View>
         ) : question + 1 === questionsNumber ? (
           <View style={[question > 0 && styles.button]}>
-            <Button handlePress={handleFinish}>Finish</Button>
+            <Button
+              handlePress={() => {
+                handleFinish();
+                handleStoreAnswers();
+              }}
+            >
+              Finish
+            </Button>
           </View>
         ) : (
           <View style={[question > 0 && styles.button]}>
-            <Button handlePress={handleNext}>Continue</Button>
+            <Button
+              handlePress={() => {
+                handleNext();
+                handleStoreAnswers();
+                handleClearAnswers();
+              }}
+            >
+              Continue
+            </Button>
           </View>
         )}
       </View>
@@ -138,13 +198,17 @@ function VotingQuestionsScreen({ navigation, route }) {
   );
 }
 
-function QuestionOptions({ option }) {
+function QuestionOptions({ option, handleChoices, answers }) {
+  const active = answers.includes(option);
+
   return (
     <Pressable
       style={({ pressed }) => [
         styles.optionContainer,
+        active && styles.chosenOption,
         pressed && styles.pressed,
       ]}
+      onPress={() => handleChoices(option)}
     >
       <Text style={styles.optionText}>{option}</Text>
     </Pressable>
@@ -274,5 +338,10 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
 
     ...shadow,
+  },
+
+  chosenOption: {
+    borderColor: colors.blue300,
+    borderWidth: 1,
   },
 });

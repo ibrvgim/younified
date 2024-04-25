@@ -19,6 +19,7 @@ import {
   setFirstNameError,
   setLastNameError,
   setPhoneNumberError,
+  setAllErrors,
 } from '../slices/inputsValidationSlice';
 
 const initialValues = {
@@ -154,7 +155,12 @@ function SignUpScreen({ navigation }) {
 
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
-            <OutlineButton handlePress={() => navigation.goBack()}>
+            <OutlineButton
+              handlePress={() => {
+                navigation.goBack();
+                dispatch(setAllErrors(''));
+              }}
+            >
               Back
             </OutlineButton>
           </View>

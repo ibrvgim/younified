@@ -47,6 +47,33 @@ export async function getUserData() {
   return user;
 }
 
+// UPDATE USER INFORMATION
+export async function updateUser({
+  firstName,
+  lastName,
+  status,
+  phoneNumber,
+  street,
+  city,
+  postalCode,
+}) {
+  const { data, error } = await supabase.auth.updateUser({
+    data: {
+      firstName,
+      lastName,
+      status,
+      phoneNumber,
+      street,
+      city,
+      postalCode,
+    },
+  });
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
 // LOG OUT
 export async function logoutUser() {
   const { error } = await supabase.auth.signOut();

@@ -28,9 +28,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import store from './store';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import { setAuthentication } from './src/slices/authenticationSlice';
+// import { setAuthentication } from './src/slices/authenticationSlice';
 
 const TopTabs = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -70,17 +70,17 @@ function Navigation() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    async function fetchStorage() {
-      setIsLoading(true);
-      const isAuthenticated = await AsyncStorage.getItem('authentication');
+  // useEffect(() => {
+  //   async function fetchStorage() {
+  //     setIsLoading(true);
+  //     const isAuthenticated = await AsyncStorage.getItem('authentication');
 
-      if (isAuthenticated) dispatch(setAuthentication(isAuthenticated));
-      setIsLoading(false);
-    }
+  //     if (isAuthenticated) dispatch(setAuthentication(isAuthenticated));
+  //     setIsLoading(false);
+  //   }
 
-    fetchStorage();
-  }, []);
+  //   fetchStorage();
+  // }, []);
 
   if (isLoading)
     return (

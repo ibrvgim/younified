@@ -36,6 +36,15 @@ export const inputsValidationSlice = createSlice({
     setPhoneNumberError: (state, action) => {
       state.phoneNumber = action.payload;
     },
+
+    setAllErrors: (state, action) => {
+      state.email = action.payload;
+      state.password = action.payload;
+      state.confirmPassword = action.payload;
+      state.firstName = action.payload;
+      state.lastName = action.payload;
+      state.phoneNumber = action.payload;
+    },
   },
 });
 
@@ -46,5 +55,6 @@ export const {
   setFirstNameError,
   setLastNameError,
   setPhoneNumberError,
+  setAllErrors,
 } = inputsValidationSlice.actions;
 export default inputsValidationSlice.reducer;

@@ -15,7 +15,10 @@ function Input({
   keyName,
   inputs,
   error = '',
+  defaultValue,
 }) {
+  const value = inputs?.[keyName] || defaultValue;
+
   return (
     <View style={styles.container}>
       {error && <Text style={styles.errorText}>{error}</Text>}
@@ -26,8 +29,9 @@ function Input({
           keyboardType={type}
           secureTextEntry={secure}
           onChangeText={(value) => handleInputsValue(keyName, value)}
-          value={inputs?.[keyName]}
+          value={value}
           autoCapitalize='none'
+          defaultValue={defaultValue}
         />
 
         {showPassword && (

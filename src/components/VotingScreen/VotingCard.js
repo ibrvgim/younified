@@ -1,22 +1,47 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import Button from '../../components/Button';
 import { shadow } from '../../constants/shadow';
 import { colors } from '../../constants/colors';
 import { useNavigation } from '@react-navigation/native';
+import useGetUserData from '../../hooks/auth/useGetUserData';
+import useGetVotes from '../../hooks/votes/useGetVotes';
+import { Ionicons } from '@expo/vector-icons';
 
 function VotingCard({ title, date }) {
   const navigation = useNavigation();
+
+  const { isLoading, userData } = useGetUserData();
+  const { isGetting, allVotes } = useGetVotes();
+
+  const submittedVotes = allVotes?.filter(
+    (item) => item.votes_result.id === userData.id
+  );
+
+  const closeVote = submittedVotes?.some(
+    (item) => item.votes_result.title === title
+  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>{title}</Text>
 
       <Text style={styles.date}>Ends in 14 days | {date}</Text>
-      <Button
-        handlePress={() => navigation.navigate('VotingQuestions', { title })}
-      >
-        Vote
-      </Button>
+      {isGetting || isLoading ? (
+        <View>
+          <ActivityIndicator size='small' color={colors.blue300} />
+        </View>
+      ) : !closeVote ? (
+        <Button
+          handlePress={() => navigation.navigate('VotingQuestions', { title })}
+        >
+          Vote
+        </Button>
+      ) : (
+        <View style={styles.closed}>
+          <Ionicons name='lock-closed' size={19} color={colors.blue300} />
+          <Text style={styles.closedText}>Submitted</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -47,5 +72,21 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontWeight: '500',
     color: colors.black50,
+  },
+
+  closed: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 5,
+  },
+
+  closedText: {
+    textTransform: 'uppercase',
+    color: colors.blue300,
+    fontWeight: '700',
+    letterSpacing: 1,
+    textAlign: 'center',
+    opacity: 0.8,
   },
 });

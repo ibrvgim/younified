@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   setEmailError,
   setPasswordError,
+  setAllErrors,
 } from '../slices/inputsValidationSlice';
 
 const initialInputs = {
@@ -100,7 +101,10 @@ function SignInScreen({ navigation }) {
           <Text style={styles.switchText}>If you don't have an account -</Text>
           <Pressable
             style={({ pressed }) => pressed && styles.pressed}
-            onPress={() => navigation.navigate('SignUp')}
+            onPress={() => {
+              navigation.navigate('SignUp');
+              dispatch(setAllErrors(''));
+            }}
           >
             <Text style={[styles.switchText, styles.signupText]}>Sign up</Text>
           </Pressable>

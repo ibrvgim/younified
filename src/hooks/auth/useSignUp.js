@@ -3,7 +3,7 @@ import { userSignUp } from '../../data/auth/authApi';
 import { Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { setAuthentication } from '../../slices/authenticationSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function useSignUp() {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ function useSignUp() {
       const isAuthenticated = data.session?.user?.role === 'authenticated';
 
       dispatch(setAuthentication(isAuthenticated));
-      AsyncStorage.setItem('authentication', isAuthenticated.toString());
+      // AsyncStorage.setItem('authentication', isAuthenticated.toString());
     },
 
     onError: (error) => {

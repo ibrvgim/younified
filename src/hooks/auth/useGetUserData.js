@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getUserData } from '../../data/auth/authApi';
 
 function useGetUserData() {
