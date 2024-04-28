@@ -3,7 +3,9 @@ import { colors } from '../../constants/colors';
 import StarsRating from '../StarsRating';
 import { shadow } from '../../constants/shadow';
 
-function PerksItem({ image, title, description, price, duration, rating }) {
+function PerksItem({ item }) {
+  const { image, title, description, price, duration, rating } = item;
+
   return (
     <Pressable
       style={({ pressed }) => [styles.container, pressed && styles.pressed]}
@@ -35,6 +37,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     borderRadius: 12,
+    marginBottom: 15,
 
     ...shadow,
   },

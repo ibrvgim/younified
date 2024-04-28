@@ -1,7 +1,11 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { colors } from '../../constants/colors';
+import { useSelector } from 'react-redux';
 
-function PerksCategories({ category, handlePress, active = false }) {
+function PerksCategories({ category, handlePress }) {
+  const selectedCategory = useSelector((state) => state.perks.category);
+  const active = selectedCategory === category;
+
   return (
     <Pressable
       style={({ pressed }) => [

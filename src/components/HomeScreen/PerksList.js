@@ -1,61 +1,69 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import PerksItem from './PerksItem';
+import { perks } from '../../data/perks';
+import { useSelector } from 'react-redux';
+import { shadow } from '../../constants/shadow';
+import { colors } from '../../constants/colors';
 
-function PerksList() {
-  return (
-    <ScrollView style={styles.screen} showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <PerksItem
-          image={require('../../../assets/perks/vegas_hotel.jpg')}
-          title='Vegas Hotel'
-          description='Breakfast included'
-          rating={5}
-          price={15}
-          duration='daily'
-        />
+function PerksList({ inputs }) {
+  const category = useSelector((state) => state.perks.category);
+  const categorize = perks.filter((item) =>
+    item.categories.includes(inputs.perksSearch || category)
+  );
 
-        <PerksItem
-          image={require('../../../assets/perks/spa.jpg')}
-          title='Salon & Spa'
-          description='Massage included'
-          rating={4}
-          price={35}
-          duration='hour'
-        />
-
-        <PerksItem
-          image={require('../../../assets/perks/gym.jpg')}
-          title='Manifest Gym'
-          description='Shower, towels'
-          rating={5}
-          price={65}
-          duration='hour'
-        />
-
-        <PerksItem
-          image={require('../../../assets/perks/shopping.jpg')}
-          title='Gift Card'
-          description='All stores included'
-          rating={3}
-          price={90}
-          duration='once'
+  if (!categorize.length)
+    return (
+      <View style={[styles.container, styles.comingSoon]}>
+        <Text style={styles.comingSoonText}>Coming soon</Text>
+        <ActivityIndicator
+          style={styles.indicator}
+          size='large'
+          color={colors.blue300}
         />
       </View>
-    </ScrollView>
+    );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={categorize}
+        renderItem={({ item }) => <PerksItem item={item} />}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
   );
 }
 
 export default PerksList;
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
   container: {
     paddingHorizontal: 20,
     paddingVertical: 30,
+  },
 
-    gap: 15,
+  comingSoon: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    marginTop: '20%',
+    marginHorizontal: 20,
+    borderRadius: 10,
+    ...shadow,
+  },
+
+  comingSoonText: {
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+    fontWeight: '500',
+  },
+
+  indicator: {
+    marginTop: 20,
   },
 });

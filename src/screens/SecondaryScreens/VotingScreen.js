@@ -1,7 +1,14 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import VotingCard from '../../components/VotingScreen/VotingCard';
+import { useEffect } from 'react';
 
-function VotingScreen() {
+function VotingScreen({ navigation }) {
+  useEffect(() => {
+    navigation.setOptions({
+      tabBarStyle: { display: 'none' },
+    });
+  }, [navigation]);
+
   return (
     <ScrollView style={styles.screen}>
       <View style={styles.container}>
