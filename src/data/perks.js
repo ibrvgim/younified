@@ -14,7 +14,14 @@ export const perks = [
     id: '0002',
     title: 'Salon & Spa',
     description: 'Massage included',
-    categories: ['Health & Fitness', 'Salon & Spa', 'health', 'salon', 'spa'],
+    categories: [
+      'New & Local',
+      'Health & Fitness',
+      'Salon & Spa',
+      'health',
+      'salon',
+      'spa',
+    ],
     rating: 4,
     price: 35,
     duration: 'hour',
@@ -26,6 +33,7 @@ export const perks = [
     title: 'Manifest Gym',
     description: 'Shower, towels',
     categories: [
+      'New & Local',
       'Things to Do',
       'Health & Fitness',
       'things',

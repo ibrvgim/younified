@@ -1,8 +1,8 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../../constants/colors';
 
-function PostHeader({ fullName, postTime, image }) {
+function PostHeader({ fullName, postTime, image, handleCollapse, collapsed }) {
   return (
     <View style={styles.container}>
       <View style={styles.userInfo}>
@@ -15,9 +15,13 @@ function PostHeader({ fullName, postTime, image }) {
       </View>
 
       <View style={styles.postInteraction}>
-        <AntDesign name='pushpino' size={20} color={colors.black50} />
-
-        <AntDesign name='up' size={20} color={colors.black50} />
+        <Pressable onPress={handleCollapse}>
+          {collapsed ? (
+            <AntDesign name='down' size={20} color={colors.black50} />
+          ) : (
+            <AntDesign name='up' size={20} color={colors.black50} />
+          )}
+        </Pressable>
       </View>
     </View>
   );

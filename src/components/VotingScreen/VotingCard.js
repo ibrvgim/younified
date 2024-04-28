@@ -7,7 +7,7 @@ import useGetUserData from '../../hooks/auth/useGetUserData';
 import useGetVotes from '../../hooks/votes/useGetVotes';
 import { Ionicons } from '@expo/vector-icons';
 
-function VotingCard({ title, date }) {
+function VotingCard({ title, startDate }) {
   const navigation = useNavigation();
 
   const { isLoading, userData } = useGetUserData();
@@ -25,7 +25,7 @@ function VotingCard({ title, date }) {
     <View style={styles.container}>
       <Text style={styles.heading}>{title}</Text>
 
-      <Text style={styles.date}>Ends in 14 days | {date}</Text>
+      <Text style={styles.date}>Ends in 14 days | {startDate}</Text>
       {isGetting || isLoading ? (
         <View>
           <ActivityIndicator size='small' color={colors.blue300} />

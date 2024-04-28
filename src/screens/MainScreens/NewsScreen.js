@@ -1,27 +1,29 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import PostItem from '../../components/NewsScreen/PostItem';
+import useGetNews from '../../hooks/news/useGetNews';
+import ScreenPending from '../../components/ScreenPending';
 
 function NewsScreen() {
+  const { isPending, getAllNews } = useGetNews();
+
+  if (isPending) return <ScreenPending />;
+
   return (
-    <ScrollView style={styles.screen}>
-      <View style={styles.container}>
-        <PostItem />
-        <PostItem />
-        <PostItem />
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <FlatList
+        data={getAllNews}
+        renderItem={({ item }) => <PostItem item={item} />}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
   );
 }
 
 export default NewsScreen;
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
   container: {
-    gap: 10,
+    flex: 1,
     paddingVertical: 20,
   },
 });

@@ -1,20 +1,18 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import VotingCard from '../../components/VotingScreen/VotingCard';
-import { useEffect } from 'react';
+import { voteQuestions } from '../../data/voteQuestions';
 
-function VotingScreen({ navigation }) {
-  useEffect(() => {
-    navigation.setOptions({
-      tabBarStyle: { display: 'none' },
-    });
-  }, [navigation]);
-
+function VotingScreen() {
   return (
     <ScrollView style={styles.screen}>
       <View style={styles.container}>
-        <VotingCard title='Upcoming Meeting' date='March 24th 2024' />
-
-        <VotingCard title='Deadline extension' date='May 17th 2024' />
+        {voteQuestions.map((item) => (
+          <VotingCard
+            title={item.title}
+            startDate={item.startDate}
+            key={item.id}
+          />
+        ))}
       </View>
     </ScrollView>
   );

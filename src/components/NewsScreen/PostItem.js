@@ -2,22 +2,35 @@ import { StyleSheet, View } from 'react-native';
 import PostHeader from './PostHeader';
 import PostContent from './PostContent';
 import PostInteraction from './PostInteraction';
+import { useState } from 'react';
+import { formatDistanceFromNow } from '../../utilities/helpers/calculateDate';
 
-function PostItem() {
+function PostItem({ item }) {
+  const { user, news } = item;
+  const [collapsed, setCollapsed] = useState(false);
+  const time = formatDistanceFromNow(item.created_at);
+
+  function handleCollapse() {
+    setCollapsed((collapse) => !collapse);
+  }
+
   return (
     <View style={styles.container}>
       <PostHeader
-        fullName='Alex Hoffmann'
-        postTime='2 hours ago'
+        fullName={`${user[0].firstName} ${user[0].lastName}`}
+        postTime={time}
         image={require('../../../assets/images/user_avatar.jpg')}
+        handleCollapse={handleCollapse}
+        collapsed={collapsed}
       />
 
       <PostContent
-        text='Lorem ipsum dolor sit amet, consectetuz adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-        image={require('../../../assets/images/post_image.jpg')}
+        text={news[0].newsDescription}
+        image={news[0].image}
+        collapsed={collapsed}
       />
 
-      <PostInteraction likes={7} comments={4} />
+      <PostInteraction likes={news[0].likes} comments={news[0].comments} />
     </View>
   );
 }
@@ -29,5 +42,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     gap: 15,
+    marginBottom: 15,
   },
 });
