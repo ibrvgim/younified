@@ -13,6 +13,7 @@ Mobile Social Media for Unions (both for IOS & Android).
 - React Native - https://reactnative.dev/
 - React Navigation - https://reactnavigation.org/
 - Redux Toolkit - https://redux.js.org/
+- TanStack Query - https://tanstack.com/query/latest
 
 For the server part SUPABASE was used: https://supabase.com/
 
