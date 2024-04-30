@@ -40,13 +40,13 @@ function HomeScreen({ navigation }) {
           <View>{profileIcon}</View>
         </HomeItem>
 
-        <HomeItem
+        {/* <HomeItem
           title='Grievances'
           description='See grievances here'
           handlePress={() => handleNavigation('')}
         >
           <View>{grievancesIcon}</View>
-        </HomeItem>
+        </HomeItem> */}
 
         <HomeItem
           title='Perks'
