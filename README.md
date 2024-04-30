@@ -1,9 +1,9 @@
 # YONIFIED
 
-Mobile Social Media for Unions.
+Mobile Social Media for Unions (both for IOS & Android).
 
 > [!IMPORTANT]
-> Some features are disabled.
+> Some features are disabled and incomplete.
 
 ## OVERVIEW
 
