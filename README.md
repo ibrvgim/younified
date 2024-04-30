@@ -1,4 +1,4 @@
-# YONIFIED
+# YOUNIFIED
 
 Mobile Social Media for Unions (both for IOS & Android).
 
